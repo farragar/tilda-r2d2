@@ -2,22 +2,22 @@ import ugfx
 import buttons
 import pyb
 from http_client import get
+from imu import IMU
 
 ugfx.init()
 ugfx.text(5, 5, 'Hello world!', ugfx.RED)
-accel = pyb.Accel()
+imu = IMU()
+TILT_THRESHOLD = -0.4
 
 host = 'http://www.farragar.com'
 port = 80
 
 
 while(True):
-    accel = imu.get_acceleration()
-    x, y, z = [accel[axis] for axis in ('x','y','z')] 
-    ugfx.text(5, 5, str(x), ugfx.RED)
-    ugfx.text(100, 5, str(y), ugfx.GREEN)
-    ugfx.text(200, 5, str(z), ugfx.BLUE)
-    print(x, y, z)
+    y = imu.get_acceleration()['y']
+    ugfx.clear()
 
-    if(x > TILT_THRESHOLD):
-    	get('{}:{}'.format(host, pot))
+    ugfx.text(5, 5, str(y), ugfx.RED)
+
+    if(y > TILT_THRESHOLD):
+    	get('{}:{}'.format(host, port))
