@@ -13,8 +13,8 @@ port = 80
 
 while(True):
     accel = imu.get_acceleration()
-    x, y, z [accel[axis] for axis in ('x','y','z')] 
-    ugfx.text(5 5, str(x), ugfx.RED)
+    x, y, z = [accel[axis] for axis in ('x','y','z')] 
+    ugfx.text(5, 5, str(x), ugfx.RED)
     ugfx.text(100, 5, str(y), ugfx.GREEN)
     ugfx.text(200, 5, str(z), ugfx.BLUE)
     print(x, y, z)
