@@ -6,7 +6,7 @@ from flask import Flask
 app = Flask(__name__)
 audio = pyaudio.PyAudio()
 
-NUM_FILES = 10
+NUM_FILES = 8
 FILE_PATH = "/Users/lauriejames/git/tilda-r2d2/server/wav"
 
 @app.route("/")
@@ -15,10 +15,10 @@ def hello():
     return('OK')
 
 def play():
-    filenum = random.randint(0, NUM_FILES)
+    filenum = random.randint(1, NUM_FILES)
     chunk = 1024
 
-    f = wave.open('{}/R2D2-{}.wav'.format{FILE_PATH, filenum}, "rb")
+    f = wave.open('{}/R2D2-{}.wav'.format(FILE_PATH, filenum), "rb")
 
     stream = audio.open(format = audio.get_format_from_width(f.getsampwidth()),
                     channels = f.getnchannels(),
@@ -37,6 +37,6 @@ def play():
 
 if __name__ == "__main__":
     try:
-        app.run(port=80, host='0.0.0.0')
+        app.run(port=8001, host='0.0.0.0')
     finally:
         audio.terminate()
