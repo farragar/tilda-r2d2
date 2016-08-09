@@ -29,7 +29,7 @@ while(True):
     if(y < TILT_THRESHOLD and not waiting):
         try:
             print('Issuing query')
-            awaiting_response = get(host).raise_for_status()
+            awaiting_response = get(host, timeout=10).raise_for_status()
             waiting = 10000
         except Exception as e:
             print('Query Failed {}'.format(str(e)))
