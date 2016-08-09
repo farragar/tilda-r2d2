@@ -8,32 +8,31 @@ import wifi
 ugfx.init()
 ugfx.text(5, 5, 'Hello world!', ugfx.RED)
 imu = IMU()
+
 TILT_THRESHOLD = -0.4
+TILT_PLAY = -0.1
 
 host = 'http://192.168.0.10'
 
 if not wifi.nic().is_connected():
     wifi.connect(timeout=20)
 
-waiting = False
+triggered = False
 
 while(True):
-    if waiting > 0:
-        waiting -= 1
-
     y = imu.get_acceleration()['y']
     ugfx.clear()
 
     ugfx.text(5, 5, str(y), ugfx.RED)
 
-    if(y < TILT_THRESHOLD and not waiting):
+    if(y < TILT_THRESHOLD):
+	triggered = True
+    elif(y > TILT_PLAY and triggered): 
         try:
-            print('Issuing query')
-            awaiting_response = get(host, timeout=10).raise_for_status()
-            waiting = 10000
+            get(host, timeout=10).raise_for_status()
         except Exception as e:
-            print('Query Failed {}'.format(str(e)))
+            print('Request Failed {}'.format(str(e)))
         except OSError as e:
-            print('Query Failed {}'.format(str(e)))
-    elif waiting:
-        print(waiting)
+            print('Request Failed {}'.format(str(e)))
+        finally:
+            triggered = False
