@@ -1,3 +1,9 @@
+### author: Laurie James
+### description: updates and installs apps. To publish apps use https://badge.emfcamp.org
+### license: MIT
+### reboot-before-run: True
+### Appname: R2D2 bin player
+
 from http_client import get
 import pyb
 from imu import IMU
@@ -15,13 +21,14 @@ if not wifi.nic().is_connected():
 triggered = False
 
 while(True):
-    _, y, _ = imu.get_acceleration()
+    y = imu.get_acceleration()['y']
 
-    if(y < TILT_THRESHOLD):
+    if(int(y) < TILT_THRESHOLD):
 	triggered = True
     elif(y > TILT_PLAY and triggered): 
         try:
-            get(host, timeout=10, is_ip=True).raise_for_status()
+            print('foobar')
+            get(host, timeout=10).raise_for_status()
         except Exception as e:
             print('Request Failed {}'.format(str(e)))
         except OSError as e:
