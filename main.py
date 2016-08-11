@@ -1,8 +1,8 @@
 ### author: Laurie James
-### description: updates and installs apps. To publish apps use https://badge.emfcamp.org
+### description: Goes in a bin. Plays r2d2 noises when the bin shuts. Useful to probably no one but me.
 ### license: MIT
 ### reboot-before-run: True
-### Appname: R2D2 bin player
+### Appname: R2D2-bin
 
 from http_client import get
 import pyb
